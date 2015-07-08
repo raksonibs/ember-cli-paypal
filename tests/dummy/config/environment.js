@@ -19,6 +19,11 @@ module.exports = function(environment) {
     }
   };
 
+  ENV['paypal'] = {
+    clientId: '12345',
+    clientSecret: '67890'
+  };
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
