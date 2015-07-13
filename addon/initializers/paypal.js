@@ -5,6 +5,8 @@ export function initialize(registry, application) {
   registry.register("paypal:main", PayPal);
   application.inject('route', 'paypal', 'paypal:main');
   application.inject('controller', 'paypal', 'paypal:main');
+  application.inject('component', 'paypal', 'paypal:main');
+  application.inject('view', 'paypal', 'paypal:main');
 }
 
 export default {

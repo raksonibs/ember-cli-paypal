@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-paypal",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The default blueprint for ember-cli addons.",
   "directories": {
     "doc": "doc",
@@ -15,7 +15,18 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "contributors": [
+    {
+      "name": "Joseph Dillon",
+      "email": "joseph.dillon.522@gmail.com",
+      "url": "https://github.com/jdillon522"
+    },
+    {
+      "name": "Igor Preston",
+      "email": "",
+      "url": "https://github.com/igorpreston"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
@@ -35,7 +46,10 @@
     "ember-try": "0.0.6"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "paypal",
+    "payPal",
+    "PayPal"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0"
