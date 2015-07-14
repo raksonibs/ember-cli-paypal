@@ -33,5 +33,5 @@ module.exports = function( environment, appConfig ) {
     config.liveEndPoint = 'api.paypal.com';
   }
 
-  return { };
+  return config;
 };
