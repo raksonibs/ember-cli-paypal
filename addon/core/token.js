@@ -1,8 +1,6 @@
 import Ember from 'ember';
-import Utils from '../utils';
+import Utils from 'ember-cli-paypal/core/utils';
 
-var clientID = 'AYZnZPw0ztH2YZARlYelfsBqQbB3sW6UDxqPeHgD8Jxg7z-f59Pz9CrQMUn_6TgyiQtyNLsQJz2C1BDi';
-var secret = 'EJSTRmMNrPs-pYjUNCsi5u_HVBZTDZiVSYGCn_B2SOVbB1PE0u-kqsJs_EUpUOggaxI8_5PhnxbT6Vz3';
 
 export function getToken(opt) {
 	var auth = 'Basic ' + btoa(opt.clientID || clientID + ':' + opt.secret || secret);
@@ -21,8 +19,4 @@ export function getToken(opt) {
 			return success.access_token;
 		}
 	});
-};
-
-var _checkTokenStatus = function (argument) {
-	// check the token status either held in localstorage or as a cookie
 };
