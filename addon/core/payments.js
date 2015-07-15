@@ -21,7 +21,7 @@ var dummyDataOneProduct = {
 }
 
 export function _submitPayment(opt) {
-	opt = dummyDataOneProduct;
+	opt.items = dummyDataOneProduct.items;
 	var token = window.localStorage.pptoken;
 	var auth = 'Bearer ';
 	var data = { 
@@ -33,23 +33,28 @@ export function _submitPayment(opt) {
 	var path = '/v1/payments/payment';
 
 
-	if (!token) {
-		token = Token.getToken(opt);				
-	} 
+	// if (!token) {
+	// 	token = Token.getToken(opt);				
+	// } 
 
 	auth = 'Bearer ' + token;
-		console.log('DATA', data)
-	// Ember.$.ajax({
-	// 	url: 'https://api.sandbox.paypal.com' + path,
-	// 	method: 'POST',
-	// 	beforeSend: function(xhr) {
-	// 		xhr.setRequestHeader('Authorization', auth);
-	// 	},
-	// 	data: data,
-	// 	success: function(success) {
-	// 		console.log('PAYMENTS', success)
-	// 	}
-	// });	
+	data = JSON.stringify(data);
+
+	Ember.$.ajax({
+		url: 'https://api.sandbox.paypal.com' + path,
+		method: 'POST',
+		contentType: 'application/json',
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader('Authorization', auth);
+		},
+		data: data,
+		success: function(success) {
+			console.log('PAYMENTS', success)
+		},
+		fail: function(fail) {
+			console.log('PAYMENTS FAILURE', fail)
+		}
+	});	
 }
 
 export function _payerObj(opt) {
@@ -83,17 +88,21 @@ export function _transactionObj(opt) {
 			// soft_descriptor: 	 value.soft_descriptor,
 			// payment_options: 	 value.payment_options
 		});
-	})
+	});
+
+	return transactions;
 };
 
 export function _redirectUrls(opt) {
-	// body...
-	console.log('MAKE REDIRECT')
+	return {
+		return_url: window.location.href,
+		cancel_url: window.location.href
+	}
 };
 
 export function _amountObj(amount) {
 	var validPayPalCountries = ['USD','AUD','BRL','CAD','CZK','DKK','EUR','HKD','HUF','ILS','JPY','MYR','MXN','TWD','NZD','NOK','PHP','PLN','GBP','SGD','SEK','CHF','THB','TRY'];
-	var price = amount.price;
+	var total = amount.total;
 	var countryCode;
 
 	// Ensure we have a valid country code
@@ -108,24 +117,38 @@ export function _amountObj(amount) {
 		}
 	});
 
-	price = Utils._formatTotals(price);
+	total = Utils._formatTotals(total);
 
 	return {
 		currency: countryCode,
-		total: price,
+		total: total,
 		details: _detailsObject(amount.details)
 	}
 };
 
 export function _detailsObject(details) {
+	var details = {};
+
 	if (!details) { return ''; }
 
-	return {
-		shipping: Utils._formatTotals(details.formatShipping),
-		subtotal: Utils._formatTotals(details.subtotal),
-		tax: Utils._formatTotals(details.tax),
-		handling_fee: Utils._formatTotals(details.handling_fee),
-		insurance: Utils._formatTotals(details.insurance),
-		shipping_discount: Utils._formatTotals(details.shipping_discount)
+	if (details.formatShipping) {
+		details.shipping = Utils._formatTotals(details.formatShipping);	
 	}
+	if (details.subtotal) {
+		details.subtotal = Utils._formatTotals(details.subtotal);	
+	}
+	if (details.tax) {
+		details.tax = Utils._formatTotals(details.tax);	
+	}
+	if (details.handling_fee) {
+		details.handling_fee = Utils._formatTotals(details.handling_fee);
+	}
+	if (details.insurance) {
+		details.insurance = Utils._formatTotals(details.insurance);	
+	}
+	if (details.shipping_discount) {
+		details.shipping_discount = Utils._formatTotals(details.shipping_discount);
+	}	
+
+	return details;
 }
