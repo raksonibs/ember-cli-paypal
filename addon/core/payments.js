@@ -32,11 +32,6 @@ export function _submitPayment(opt) {
 	};
 	var path = '/v1/payments/payment';
 
-
-	// if (!token) {
-	// 	token = Token.getToken(opt);				
-	// } 
-
 	auth = 'Bearer ' + token;
 	data = JSON.stringify(data);
 
