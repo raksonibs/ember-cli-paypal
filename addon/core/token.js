@@ -1,27 +1,32 @@
 import Ember from 'ember';
-import Utils from 'ember-cli-paypal/core/utils';
 
-
-export function _getToken(opt) {
+export function _getToken(paypal) {
 	return new Promise(function(resolve, reject) {
-		var auth = 'Basic ' + btoa(opt.clientID || clientID + ':' + opt.secret || secret);
+		var auth = 'Basic ' + btoa(paypal.clientId + ':' + paypal.secret);
 		var data = { 'grant_type' : 'client_credentials' };
+		var href = paypal.endPoint;
 		var path = '/v1/oauth2/token';
 
-		Ember.$.ajax({
-			url: 'https://api.sandbox.paypal.com' + path,
-			method: 'POST',
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader('Authorization', auth);
-			},
-			data: data,
-			success: function(success) {
-				window.localStorage.pptoken = success.access_token;
-				resolve(success.access_token);
-			},
-			fail: function(fail) {
-				reject(fail);
-			}
-		});
+		// If token exists already
+		if (window.localStorage.pptoken) {
+			resolve();
+		} else {
+			Ember.$.ajax({
+				url: href + path,
+				method: 'POST',
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('Authorization', auth);
+				},
+				data: data,
+				success: function(success) {
+					window.localStorage.pptoken = success.access_token;
+					return resolve();
+				},
+				fail: function(fail) {
+					// TODO: implement proper error handling with PayPal errors
+					return reject(fail);
+				}
+			});
+		}		
 	});		
-};
+}
