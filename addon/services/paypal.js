@@ -34,7 +34,7 @@ export default Ember.Service.extend({
 		.then(
 			function(results) {
 				// return Results.paymentResults(results)	
-				return callback();
+				return callback(results);
 			},
 			function(fail) {
 				// Errors.paymentErrors()
