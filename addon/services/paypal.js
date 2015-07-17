@@ -1,14 +1,46 @@
 import Ember from 'ember';
-import Token from './token';
+import Token from 'ember-cli-paypal/core/token';
+import Payment from 'ember-cli-paypal/core/payments';
+import Results from 'ember-cli-paypal/core/results';
 
 export default Ember.Service.extend({
-	
-	submitPayment: function() {
-		var token = window.localStorage.pptoken;
+	config: undefined,
 
-		if (!token) {
-			token = Token.getToken();	
+	setConfig: function() {
+		this.set('config',this.container.lookupFactory('config:environment'));
+	}.on('init'),
+
+	submitPayment: function(opt, callback) {
+		var config = this.get('config')
+		
+		if (config) {
+			config = config.paypal;
+		} else {
+			// TODO: PROPER ERRORS
+			return 'NO CONFIG'
 		}
+
+		
+		Token._getToken(config)
+		.then(
+			function(success) {
+				return Payment._submitPayment(opt);
+			}, 
+			
+			function(fail) {
+				return console.log('FAILURE', fail);
+			}
+		)
+		.then(
+			function(results) {
+				// return Results.paymentResults(results)	
+				return callback();
+			},
+			function(fail) {
+				// Errors.paymentErrors()
+			}
+			
+		);	
 		
 	}
 });
