@@ -10,7 +10,7 @@ export default Ember.Service.extend({
 		this.set('config',this.container.lookupFactory('config:environment'));
 	}.on('init'),
 
-	submitPayment: function(opt) {
+	submitPayment: function(opt, callback) {
 		var config = this.get('config')
 		
 		if (config) {
@@ -32,8 +32,9 @@ export default Ember.Service.extend({
 			}
 		)
 		.then(
-			function(success) {
-				return Results.paymentResults(results)	
+			function(results) {
+				// return Results.paymentResults(results)	
+				return callback();
 			},
 			function(fail) {
 				// Errors.paymentErrors()
