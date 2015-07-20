@@ -1,7 +1,7 @@
 {
   "name": "ember-cli-paypal",
   "version": "0.0.1",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "An ember-cli addon to easily integrate paypal into your app.",
   "directories": {
     "doc": "doc",
     "test": "tests"
