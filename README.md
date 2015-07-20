@@ -8,7 +8,7 @@ TODO: (feel free to help)
 - yudoc / jsdoc inline documentation
 - The rest of the PayPal REST API (ha!)
 
-## Instalation:
+## Installation:
 `npm install --save-dev ember-cli-paypal`
 
 ## Usage
@@ -21,11 +21,11 @@ ENV.paypal: {
 }
 ```
 
-Your `endPoint` will either be `'https://api.sandbox.paypal.com'` or `'https://api.paypal.com'` depnding on your environment. Your `clientId` and `secret` are provided by your [PayPal Developer Account](https://developer.paypal.com/developer/).
+Your `endPoint` will either be `'https://api.sandbox.paypal.com'` or `'https://api.paypal.com'` depending on your environment. Your `clientId` and `secret` are provided by your [PayPal Developer Account](https://developer.paypal.com/developer/).
 
 Currently, the only REST endpoint supported is `POST /v1/payments/payment`. Specifically, payment with a credit card. 
 
-The following is the minimum data and proper formt necessary to complete a transaction:
+The following is the minimum data and proper format necessary to complete a transaction:
 ```
 var data = {
     "intent": "sale",
@@ -72,4 +72,9 @@ Refer to [here](https://gist.github.com/JDillon522/baa79eb1a4e47b06be60) for a (
 
 ##### `this.paypal.submitPayment(data, callback)` : 
 Submit payment data to paypal's api. The callback will return the response from the API for you to handle as you wish.
+
+## Contributing:
+Yes Please.
+
+I would gratefully appreciate any help to improve this addon. 
 
