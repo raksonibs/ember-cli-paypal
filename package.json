@@ -2,6 +2,7 @@
   "name": "ember-cli-paypal",
   "version": "0.0.1",
   "description": "An ember-cli addon to easily integrate paypal into your app.",
+  "main": "index.js",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +12,10 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdillon522/ember-cli-paypal.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
@@ -55,6 +59,7 @@
     "ember-cli-babel": "^5.0.0"
   },
   "ember-addon": {
-    "configPath": "tests/dummy/config"
+    "configPath": "tests/dummy/config",
+    "main": "index.js"
   }
 }
